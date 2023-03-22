@@ -31,7 +31,7 @@ public class UserAPI {
         return ResponseEntity.badRequest().body("Some internal server error");
     }
 
-    @GetMapping("/get/allusers")
+    @GetMapping("/get/all-users")
     @ResponseBody
     public ResponseEntity<?> getAllUsers(){
         List<User> resultSet= userService.getAllUsers();

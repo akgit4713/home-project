@@ -37,6 +37,7 @@ public class MessageController {
         }
         catch (Exception e){
             LOG.error("Exception occurred while creating the new Kafka topic {}",topicName,e);
+            return ResponseEntity.badRequest().body("Exception occurred while creating the new Kafka topic");
         }
         return ResponseEntity.ok().build();
     }
@@ -52,6 +53,7 @@ public class MessageController {
         }
         catch (Exception e){
             LOG.error("Error occurred while publishing message {}, to kafka topic {}", message,topic);
+            return ResponseEntity.badRequest().body("Error occurred while publishing message");
         }
         return ResponseEntity.ok().build();
     }

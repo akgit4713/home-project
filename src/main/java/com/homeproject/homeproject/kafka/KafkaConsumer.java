@@ -11,6 +11,6 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "my-topic", groupId = "my-group")
     public void consume(String message){
-        LOG.info("Consuming from my_topic with message {}",message);
+        LOG.info("Consuming from my-topic with message {}",message);
     }
 }

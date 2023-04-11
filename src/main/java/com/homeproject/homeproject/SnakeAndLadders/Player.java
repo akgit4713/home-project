@@ -14,7 +14,7 @@ public class Player implements Dice{
     @Override
     public int roll(int size) {
         // Logic to roll
-        return ThreadLocalRandom.current().nextInt(0, 6);
+        return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
     public void movePlayer(int moves){

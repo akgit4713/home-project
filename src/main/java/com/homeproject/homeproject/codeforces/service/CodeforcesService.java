@@ -17,17 +17,18 @@ public class CodeforcesService {
     private final Gson gson = new GsonBuilder()
             .setLenient()
             .create();
+
     @Autowired
     public CodeforcesService() {
-        this.iCodeforcesAPI=RetrofitUtil.getInstance().create(ICodeforcesAPI.class);
+        this.iCodeforcesAPI = RetrofitUtil.getInstance().create(ICodeforcesAPI.class);
     }
 
-    public JsonArray getBlogComments(String id){
+    public JsonArray getBlogComments(String id) {
         try {
             Call<JsonObject> call = iCodeforcesAPI.getBlogComments(id);
-            LOG.info("Call : {}",call);
+            LOG.info("Call : {}", call);
             Response<JsonObject> response = call.execute();
-            LOG.info("Response : {}",response);
+            LOG.info("Response : {}", response);
             JsonArray result = response.body().get("result").getAsJsonArray();
             LOG.info("Found {} comments for the blog {}", result.size(), id);
             return result;
@@ -36,7 +37,7 @@ public class CodeforcesService {
             // handle the exception gracefully
         } catch (Exception e) {
             // Handle the exception here
-            LOG.info("Some error occurred while calling codeforces API ",e);
+            LOG.info("Some error occurred while calling codeforces API ", e);
         }
         return null;
     }

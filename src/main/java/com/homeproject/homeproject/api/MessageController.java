@@ -28,15 +28,14 @@ public class MessageController {
 
     @PostMapping("/create-topic")
     @ResponseBody
-    private ResponseEntity<?> createNewTopic(@RequestBody ObjectNode objectNode){
+    private ResponseEntity<?> createNewTopic(@RequestBody ObjectNode objectNode) {
         String topicName = objectNode.get("topic").asText();
         LOG.info("Got request for creating a new Kafka topic {}", topicName);
-        try{
-            NewTopic newTopic= kafkaTopicService.createTopic(topicName);
+        try {
+            NewTopic newTopic = kafkaTopicService.createTopic(topicName);
             LOG.info("Create new Kafka topic {}", newTopic);
-        }
-        catch (Exception e){
-            LOG.error("Exception occurred while creating the new Kafka topic {}",topicName,e);
+        } catch (Exception e) {
+            LOG.error("Exception occurred while creating the new Kafka topic {}", topicName, e);
             return ResponseEntity.badRequest().body("Exception occurred while creating the new Kafka topic");
         }
         return ResponseEntity.ok().build();
@@ -44,15 +43,14 @@ public class MessageController {
 
     @PostMapping("/publish")
     @ResponseBody
-    private ResponseEntity<?> publish(@RequestBody ObjectNode objectNode){
+    private ResponseEntity<?> publish(@RequestBody ObjectNode objectNode) {
         String message = objectNode.get("message").asText();
         String topic = objectNode.get("topic").asText();
         LOG.info("Got request for publishing the message {} to Kafka Topic {}", message, topic);
-        try{
-            kafkaProducer.sendMessage(message,topic);
-        }
-        catch (Exception e){
-            LOG.error("Error occurred while publishing message {}, to kafka topic {}", message,topic);
+        try {
+            kafkaProducer.sendMessage(message, topic);
+        } catch (Exception e) {
+            LOG.error("Error occurred while publishing message {}, to kafka topic {}", message, topic);
             return ResponseEntity.badRequest().body("Error occurred while publishing message");
         }
         return ResponseEntity.ok().build();

@@ -6,8 +6,9 @@ import java.util.List;
 
 public class Board {
     public static HashMap<Integer, Integer> snakeAndLadderMap;
-    public List<Player> playerList= new ArrayList<>();
-    private Board(){
+    public List<Player> playerList = new ArrayList<>();
+
+    private Board() {
         snakeAndLadderMap = new HashMap<>();
         //Ladders
         snakeAndLadderMap.put(5, 9);
@@ -15,8 +16,8 @@ public class Board {
         snakeAndLadderMap.put(50, 60);
         snakeAndLadderMap.put(25, 93);
         snakeAndLadderMap.put(24, 77);
-        snakeAndLadderMap.put(33,69);
-        snakeAndLadderMap.put(42,85);
+        snakeAndLadderMap.put(33, 69);
+        snakeAndLadderMap.put(42, 85);
 
         //Snakes
         snakeAndLadderMap.put(18, 11);
@@ -27,41 +28,43 @@ public class Board {
         snakeAndLadderMap.put(98, 2);
         snakeAndLadderMap.put(66, 17);
 
-        playerList.add(new Player("PlayerA",0));
-        playerList.add(new Player("PlayerB",0));
+        playerList.add(new Player("PlayerA", 0));
+        playerList.add(new Player("PlayerB", 0));
     }
-    private static class BoardImpl{
-        private static final Board board = new Board();
-    }
-    public static Board getInstance(){
+
+    public static Board getInstance() {
         return BoardImpl.board;
     }
 
-    public boolean isSnake(int x){
-        if(snakeAndLadderMap.containsKey(x) && snakeAndLadderMap.get(x) < x){
-            System.out.println("$$$$$$ You got a snake at "+ x);
+    public boolean isSnake(int x) {
+        if (snakeAndLadderMap.containsKey(x) && snakeAndLadderMap.get(x) < x) {
+            System.out.println("$$$$$$ You got a snake at " + x);
             return true;
         }
         return false;
     }
 
-    public boolean isLadder(int x){
-        if (snakeAndLadderMap.containsKey(x) && snakeAndLadderMap.get(x) > x){
-            System.out.println("###### You got a ladder at "+ x);
+    public boolean isLadder(int x) {
+        if (snakeAndLadderMap.containsKey(x) && snakeAndLadderMap.get(x) > x) {
+            System.out.println("###### You got a ladder at " + x);
             return true;
         }
         return false;
     }
 
-    public boolean isGameOver(){
-        for( Player player : playerList){
-            if(player.getPosition()>=100)
+    public boolean isGameOver() {
+        for (Player player : playerList) {
+            if (player.getPosition() >= 100)
                 return true;
         }
         return false;
     }
 
-    public Player getCurrentPlayer( int index){
+    public Player getCurrentPlayer(int index) {
         return playerList.get(index);
+    }
+
+    private static class BoardImpl {
+        private static final Board board = new Board();
     }
 }

@@ -20,21 +20,23 @@ public class CacheAPI {
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<?> addInCache(@RequestBody ObjectNode objectNode){
+    public ResponseEntity<?> addInCache(@RequestBody ObjectNode objectNode) {
         String key = objectNode.get("key").asText();
-        Object value= objectNode.get("value");
-        redisService.saveData(key,value);
+        Object value = objectNode.get("value");
+        redisService.saveData(key, value);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping("/get-value")
     @ResponseBody
-    public ResponseEntity<?> getFromCache(@RequestBody ObjectNode objectNode){
+    public ResponseEntity<?> getFromCache(@RequestBody ObjectNode objectNode) {
         String key = objectNode.get("key").asText();
         return ResponseEntity.ok().body(redisService.getData(key));
     }
+
     @PostMapping("/evict-value")
     @ResponseBody
-    public ResponseEntity<?> evictFromCache(@RequestBody ObjectNode objectNode){
+    public ResponseEntity<?> evictFromCache(@RequestBody ObjectNode objectNode) {
         String key = objectNode.get("key").asText();
         redisService.evict(key);
         return ResponseEntity.ok().build();

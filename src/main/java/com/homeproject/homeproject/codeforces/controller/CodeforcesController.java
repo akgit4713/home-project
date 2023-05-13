@@ -19,7 +19,7 @@ public class CodeforcesController {
 
     @GetMapping("/blogComments")
     @ResponseBody
-    public ResponseEntity<?> getComments(@NotNull @RequestBody ObjectNode objectNode){
+    public ResponseEntity<?> getComments(@NotNull @RequestBody ObjectNode objectNode) {
         String key = objectNode.get("id").asText();
         codeforcesService.getBlogComments(key);
         return ResponseEntity.ok().build();

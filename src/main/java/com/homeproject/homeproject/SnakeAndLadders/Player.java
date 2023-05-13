@@ -2,13 +2,13 @@ package com.homeproject.homeproject.SnakeAndLadders;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Player implements Dice{
+public class Player implements Dice {
     private final String name;
     private int position;
 
     public Player(String name, int position) {
         this.name = name;
-        this.position=position;
+        this.position = position;
     }
 
     @Override
@@ -17,21 +17,22 @@ public class Player implements Dice{
         return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
-    public void movePlayer(int moves){
-        if(Board.getInstance().isLadder(position + moves) || Board.getInstance().isSnake(position + moves))
+    public void movePlayer(int moves) {
+        if (Board.getInstance().isLadder(position + moves) || Board.getInstance().isSnake(position + moves))
             position = newPositionAfterJump(position + moves);
         else
-            this.position+=moves;
+            this.position += moves;
     }
 
     private int newPositionAfterJump(int i) {
         return Board.snakeAndLadderMap.get(i);
     }
 
-    public int getPosition(){
+    public int getPosition() {
         return this.position;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 }

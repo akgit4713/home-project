@@ -10,7 +10,7 @@ public class TestThread {
         for (int i = 0; i < MAX_NUM; i++) {
             final int threadNum = i + 1;
             new Thread(() -> {
-                synchronized (lock){
+                synchronized (lock) {
                     while (currentNum != threadNum) {
                         try {
                             lock.wait();
@@ -19,7 +19,7 @@ public class TestThread {
                         }
                     }
 
-                    System.out.println(threadNum+" "+Thread.currentThread().getName());
+                    System.out.println(threadNum + " " + Thread.currentThread().getName());
                     currentNum++;
                     lock.notifyAll();
                 }

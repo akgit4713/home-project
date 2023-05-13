@@ -24,26 +24,26 @@ public class UserAPI {
 
     @GetMapping("/get")
     @ResponseBody
-    public ResponseEntity<?> getUserbyId(@RequestParam String id){
-        Optional<User> resultSet= userService.findUserbyId(id);
-        if(resultSet.isPresent())
+    public ResponseEntity<?> getUserbyId(@RequestParam String id) {
+        Optional<User> resultSet = userService.findUserbyId(id);
+        if (resultSet.isPresent())
             return ResponseEntity.ok(resultSet);
         return ResponseEntity.badRequest().body("Some internal server error");
     }
 
     @GetMapping("/get/all-users")
     @ResponseBody
-    public ResponseEntity<?> getAllUsers(){
-        List<User> resultSet= userService.getAllUsers();
-        if(resultSet.isEmpty())
+    public ResponseEntity<?> getAllUsers() {
+        List<User> resultSet = userService.getAllUsers();
+        if (resultSet.isEmpty())
             return ResponseEntity.badRequest().body("Some internal server error");
         return ResponseEntity.ok(resultSet);
     }
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<?> addNewUser(@RequestBody User user){
-        LOG.info("Received add request for adding new user to DB {}",user);
+    public ResponseEntity<?> addNewUser(@RequestBody User user) {
+        LOG.info("Received add request for adding new user to DB {}", user);
         userService.saveUser(user);
         return ResponseEntity.ok("Added user to the DB");
     }

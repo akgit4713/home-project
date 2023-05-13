@@ -20,30 +20,27 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findUserbyId(String id){
-        try{
+    public Optional<User> findUserbyId(String id) {
+        try {
             return userRepository.findById(id);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             LOG.info("Some error occurred while getting User from DB {}", e.getMessage());
             return Optional.empty();
         }
     }
 
     public void saveUser(User user) {
-        try{
+        try {
             userRepository.save(user);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             LOG.info("Some error occurred while saving the user to DB {}", e.getMessage());
         }
     }
 
     public List<User> getAllUsers() {
-        try{
+        try {
             return userRepository.findAll();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             LOG.info("Some error occurred while fetching all users from DB {}", e.getMessage());
             return Collections.emptyList();
         }

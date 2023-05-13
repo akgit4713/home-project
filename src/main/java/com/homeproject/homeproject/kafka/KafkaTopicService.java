@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaTopicService {
-    public NewTopic createTopic(String topic){
+    public NewTopic createTopic(String topic) {
         return TopicBuilder.name(topic).build();
     }
 }

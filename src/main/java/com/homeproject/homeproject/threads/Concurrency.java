@@ -1,9 +1,26 @@
 package com.homeproject.homeproject.threads;
+
 // ref:
 // https://docs.oracle.com/javase/tutorial/essential/concurrency/sync.html
 // https://docs.oracle.com/javase/tutorial/essential/concurrency/deadlock.html
 // https://docs.oracle.com/javase/tutorial/essential/concurrency/atomic.html
 public class Concurrency {
+    public static void main(String[] args) throws Exception {
+        final Friend alphonse = new Friend("Alphonse");
+        final Friend gaston = new Friend("Gaston");
+        new Thread(new Runnable() {
+            public void run() {
+                alphonse.bow(gaston);
+            }
+        }).start();
+        // Thread.sleep(10000);
+        new Thread(new Runnable() {
+            public void run() {
+                gaston.bow(alphonse);
+            }
+        }).start();
+    }
+
     static class Friend {
         private final String name;
 
@@ -27,17 +44,5 @@ public class Concurrency {
                             + " has bowed back to me!%n",
                     this.name, bower.getName());
         }
-    }
-
-    public static void main(String[] args) throws Exception{
-        final Friend alphonse = new Friend("Alphonse");
-        final Friend gaston = new Friend("Gaston");
-        new Thread(new Runnable() {
-            public void run() { alphonse.bow(gaston); }
-        }).start();
-        // Thread.sleep(10000);
-        new Thread(new Runnable() {
-            public void run() { gaston.bow(alphonse); }
-        }).start();
     }
 }

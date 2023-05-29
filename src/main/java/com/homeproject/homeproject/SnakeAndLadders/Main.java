@@ -7,7 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         Board board = Board.getInstance();
-        Board board1 = Board.getInstance();
         int currentPlayer = 0;
         while (!board.isGameOver()) {
             Player player = board.getCurrentPlayer(currentPlayer);

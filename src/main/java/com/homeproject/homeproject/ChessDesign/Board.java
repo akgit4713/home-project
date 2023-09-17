@@ -1,6 +1,5 @@
 package com.homeproject.homeproject.ChessDesign;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,9 +10,6 @@ import java.util.Objects;
 public class Board {
     public static final int size = 8;
     private static ArrayList<Piece> boardSetup = new ArrayList<>();
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static List<Player> players = new ArrayList<>();
 
     private Board() {
         setupBoardForGameplay();
@@ -33,6 +29,18 @@ public class Board {
 
     public static Board getInstance() {
         return BoardImpl.board;
+    }
+
+    public static void printChessBoard() {
+        for (int i = 1; i <= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                if (getPiece(i, j) == null)
+                    System.out.print("\t");
+                else
+                    System.out.print(Objects.requireNonNull(getPiece(i, j)).getPieceType() + "\t");
+            }
+            System.out.println();
+        }
     }
 
     private void setupBoardForGameplay() {
@@ -72,31 +80,16 @@ public class Board {
         }
     }
 
-    public void movePiece(Player player,Integer sx, Integer sy, Integer ex, Integer ey) {
-        Piece piece = getPiece(sx,sy);
-        if(piece == null)
+    public void movePiece(Player player, Integer sx, Integer sy, Integer ex, Integer ey) {
+        Piece piece = getPiece(sx, sy);
+        if (piece == null )
             throw new ChessException("Invalid MOVE");
-        piece.movePiece(player,sx,sy,ex,ey);
+        piece.movePiece(player, sx, sy, ex, ey);
     }
 
     private static class BoardImpl {
         private static final Board board = new Board();
 
-    }
-    public static void setPlayer(Player player){
-        players.add(player);
-    }
-
-    public static void printChessBoard(){
-        for (int i=1;i<=size;i++){
-            for (int j=1;j<=size;j++){
-                if(getPiece(i,j)==null)
-                    System.out.print("\t");
-                else
-                    System.out.print( ANSI_GREEN + Objects.requireNonNull(getPiece(i, j)).getPieceType()+"\t");
-            }
-            System.out.println();
-        }
     }
 
 }

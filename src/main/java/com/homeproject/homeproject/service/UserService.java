@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,20 @@ public class UserService {
     public void saveUser(User user) {
         try {
             userRepository.save(user);
+        } catch (Exception e) {
+            LOG.info("Some error occurred while saving the user to DB {}", e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void updateUser(User user) {
+        try {
+            Optional<User> fetchedUser = userRepository.findById(user.getId());
+            if (fetchedUser.isPresent()){
+                User newUser = fetchedUser.get();
+                newUser.setEmail("kkk@gmail.com");
+                newUser.setName("KKKKKK");
+            }
         } catch (Exception e) {
             LOG.info("Some error occurred while saving the user to DB {}", e.getMessage());
         }

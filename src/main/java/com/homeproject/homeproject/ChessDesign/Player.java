@@ -2,8 +2,8 @@ package com.homeproject.homeproject.ChessDesign;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Data
 @Builder
@@ -13,6 +13,8 @@ public class Player {
     public void move(Integer sx, Integer sy, Integer ex, Integer ey){
         System.out.println("Going to move");
         Board board = Board.getInstance();
+        if (Objects.requireNonNull(Board.getPiece(sx, sy)).getColor() != this.color)
+            throw new ChessException("Invalid Color!!!");
         board.movePiece(this, sx, sy, ex, ey);
     }
 }

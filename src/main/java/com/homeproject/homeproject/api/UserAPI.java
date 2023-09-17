@@ -47,4 +47,12 @@ public class UserAPI {
         userService.saveUser(user);
         return ResponseEntity.ok("Added user to the DB");
     }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        LOG.info("Received add request for adding new user to DB {}", user);
+        userService.updateUser(user);
+        return ResponseEntity.ok("Added user to the DB");
+    }
 }

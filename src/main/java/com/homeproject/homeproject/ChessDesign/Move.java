@@ -1,8 +1,5 @@
 package com.homeproject.homeproject.ChessDesign;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.util.Objects;
 
 import static java.lang.Math.abs;
@@ -24,9 +21,8 @@ public class Move {
             if (ex - sx > 1 || ey - sy > 1)
                 return false;
         } else {
-            boolean b = abs(ex - sx) == abs(ey - sy);
             if (pieceType.equals(PieceType.BISHOP)) {
-                return b && check;
+                return checkBishop(sx, sy, ex, ey) && check;
             } else if (pieceType.equals(PieceType.KNIGHT)) {
                 if (abs(ex - sx) == 1) {
                     return abs(ey - sy) == 2 && check;
@@ -36,16 +32,113 @@ public class Move {
                     return false;
                 }
             } else {
-                boolean b1 = abs(sy - ey) == 0 && abs(sx - ex) > 0;
                 if (pieceType.equals(PieceType.ROOK)) {
-                    return (abs(sx - ex) == 0 && abs(sy - ey) > 0) || b1 && check;
+                    return checkRook(sx, sy, ex, ey) && check;
                 } else if (pieceType.equals(PieceType.QUEEN)) {
-                    return (b || (abs(ex - sx) == 0 && abs(sy - ey) > 0) || b1) && check;
+                    return (checkRook(sx, sy, ex, ey) || checkBishop(sx, sy, ex, ey)) && check;
                 } else if (pieceType.equals(PieceType.PAWN)) {
                     return abs(ey - sy) > 0 && abs(ex - sx) == 0 || (ey - sy == 1 && abs(ex - sx) == 1 && check);
                 } else {
                     throw new ChessException("Invalid move");
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkBishop(Integer sx, Integer sy, Integer ex, Integer ey){
+        int x = sx, y= sy, X=ex, Y=ey;
+        boolean b = abs(X - x) == abs(Y - y);
+        if(b){
+            if(X>x){
+                if(Y>y){
+                    while(x!=X && y!=Y){
+                        x++;
+                        y++;
+                        if(x!=X && y!=Y &&Board.getPiece(x,y)!=null)
+                            return false;
+                    }
+                    return true;
+                }
+                else{
+                    while(x!=X && y!=Y){
+                        ++x;
+                        --y;
+                        if(x!=X && y!=Y &&Board.getPiece(x,y)!=null)
+                            return false;
+                    }
+                    return true;
+                }
+            }
+            else {
+                if(Y>y){
+                    while(x!=X && y!=Y){
+                        --x;
+                        y++;
+                        if(x!=X && y!=Y &&Board.getPiece(x,y)!=null)
+                            return false;
+                    }
+                    return true;
+                }
+                else{
+                    while(x!=X && y!=Y){
+                        --x;
+                        --y;
+                        if(x!=X && y!=Y &&Board.getPiece(x,y)!=null)
+                            return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkRook(Integer sx, Integer sy, Integer ex, Integer ey) {
+        int x = sx, y = sy, X = ex, Y = ey;
+        boolean check = abs(y - Y) == 0 && abs(x - X) > 0 || (abs(x - X) == 0 && abs(y - Y) > 0);
+        if (check) {
+            if (abs(x - X) > 0) {
+                if (X > x) {
+                    while (x != X) {
+                        ++x;
+                        if (x != X) {
+                            if (Board.getPiece(x, y) != null)
+                                return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    while (x != X) {
+                        --x;
+                        if (x != X) {
+                            if (Board.getPiece(x, y) != null)
+                                return false;
+                        }
+                    }
+                    return true;
+                }
+            } else {
+                if (Y > y) {
+                    while (y != Y) {
+                        ++y;
+                        if (y != Y) {
+                            if (Board.getPiece(x, y) != null)
+                                return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    while (y != Y) {
+                        --y;
+                        if (y != Y) {
+                            if (Board.getPiece(x, y) != null)
+                                return false;
+                        }
+                    }
+                    return true;
+                }
+
             }
         }
         return false;

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Builder
-@Component
 public class Piece {
     private  Color color;
     private  Integer posX;

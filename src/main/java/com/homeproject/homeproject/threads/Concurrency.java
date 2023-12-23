@@ -8,17 +8,8 @@ public class Concurrency {
     public static void main(String[] args) throws Exception {
         final Friend alphonse = new Friend("Alphonse");
         final Friend gaston = new Friend("Gaston");
-        new Thread(new Runnable() {
-            public void run() {
-                alphonse.bow(gaston);
-            }
-        }).start();
-        // Thread.sleep(10000);
-        new Thread(new Runnable() {
-            public void run() {
-                gaston.bow(alphonse);
-            }
-        }).start();
+        new Thread(()-> {alphonse.bow(gaston);}).start();
+        new Thread(()-> {gaston.bow(alphonse);}).start();
     }
 
     static class Friend {
@@ -39,7 +30,7 @@ public class Concurrency {
             bower.bowBack(this);
         }
 
-        public void bowBack(Friend bower) {
+        public synchronized void bowBack(Friend bower) {
             System.out.format("%s: %s"
                             + " has bowed back to me!%n",
                     this.name, bower.getName());
